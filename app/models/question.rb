@@ -45,4 +45,18 @@ class Question < ActiveRecord::Base
     answer_choice_response_counts
   end
 
+  def best_results
+
+    # (<<-SQL)
+    #   SELECT
+    #     answer_choices.*, COUNT(responses.id) AS num_responses
+    #   FROM
+    #     answer_choices
+    #   LEFT OUTER JOIN
+    #     responses ON answer_choices.id = responses.answer_choice_id
+    #   GROUP BY
+    #     answer_choices.id
+    #
+    # SQL
+
 end

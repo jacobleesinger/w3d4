@@ -41,7 +41,7 @@ class Response < ActiveRecord::Base
   end
 
   def respondent_did_not_author_question
-    if question.poll.author_id == self.id
+    if question.poll.author_id == self.user_id
       errors[:base] << "Author can't respond to own poll"
     end
   end
