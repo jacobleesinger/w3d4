@@ -58,5 +58,13 @@ class Question < ActiveRecord::Base
     #     answer_choices.id
     #
     # SQL
+    answer_choices = self.answer_choices
+      .select("answer_choices.*, COUNT(responses.id) AS response_count")
+      .joins("LEFT OUTER JOIN responses ON answer_choices.id = responses.answer_choice_id")
+      .group("answer_choices.id")
 
+    answer_choices.inject({}) do |count, answer_choices|
+      count[answer_choices.text] = answer_choices.response_count; count
+    end
+  end
 end
